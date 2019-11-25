@@ -1,21 +1,21 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import TestModel
-from .serializers import TestModelSerializer
+from .models import Listing
+from .serializers import ListingSerializer
 from .permissions import TestPermissions
 
 
-class TestModelViewSet(viewsets.ModelViewSet):
+class ListingViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing user instances.
     """
-    serializer_class = TestModelSerializer
-    queryset = TestModel.objects.all()
+    serializer_class = ListingSerializer
+    queryset = Listing.objects.all()
     permission_classes = (TestPermissions, )
 
     def get_queryset(self):
         request = self.request
-        qs = super(TestModelViewSet, self).get_queryset()
+        qs = super(ListingViewSet, self).get_queryset()
         if not request or not request.user:
             return qs
 
