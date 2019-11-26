@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import Listing
+from .models import Listing, UserFeedPermissions
 from .serializers import ListingSerializer
 from .permissions import TestPermissions
 
@@ -20,4 +20,5 @@ class ListingViewSet(viewsets.ModelViewSet):
             return qs
 
         user = request.user
-        return qs.filter(owned_by=6)
+        feed_perms = UserFeedPermissions.objects.filter(user=user)
+        return qs.filter(owned_by__in=feed_perms.values('feed'))
