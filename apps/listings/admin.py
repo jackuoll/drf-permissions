@@ -14,4 +14,4 @@ class FeedAdmin(admin.ModelAdmin):
 
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('data', 'owned_by', )
