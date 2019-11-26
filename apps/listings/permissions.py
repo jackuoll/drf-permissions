@@ -11,3 +11,9 @@ class TestPermissions(permissions.BasePermission):
         user = request.user
         feed_permissions = UserFeedPermissions.objects.filter(user=user)
         return obj.owned_by in feed_permissions
+
+    def has_permission(self, request, view):
+        if not request.POST:
+            return super(TestPermissions, self).has_permission(request, view)
+
+        return UserFeedPermissions.objects.filter(user=request.user, feed_id=request.POST['owned_by'])
