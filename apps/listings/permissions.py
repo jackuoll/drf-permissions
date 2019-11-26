@@ -9,8 +9,10 @@ class TestPermissions(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         user = request.user
-        feed_permissions = UserFeedPermissions.objects.filter(user=user)
-        return obj.owned_by in feed_permissions
+        return UserFeedPermissions.objects.filter(
+            user=user,
+            feed=obj.owned_by
+        ).exists()
 
     def has_permission(self, request, view):
         if not request.POST:
