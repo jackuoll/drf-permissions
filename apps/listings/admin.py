@@ -4,14 +4,16 @@ from .models import UserFeedPermissions, Feed, Listing
 
 @admin.register(UserFeedPermissions)
 class UserFeedPermissionsAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'user', 'feed')
     pass
 
 
 @admin.register(Feed)
 class FeedAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'name')
     pass
 
 
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ('data', 'owned_by', )
+    list_display = ('pk', 'data', 'owned_by', )
