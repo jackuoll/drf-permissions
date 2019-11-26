@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from .models import Listing, UserFeedPermissions
 from .serializers import ListingSerializer
 from .permissions import TestPermissions
@@ -11,7 +11,7 @@ class ListingViewSet(viewsets.ModelViewSet):
     """
     serializer_class = ListingSerializer
     queryset = Listing.objects.all()
-    permission_classes = (TestPermissions, )
+    permission_classes = (permissions.DjangoModelPermissions, TestPermissions, )
 
     def get_queryset(self):
         request = self.request
