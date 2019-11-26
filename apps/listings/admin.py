@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
+
 from .models import UserFeedPermissions, Feed, Listing
 
 
@@ -17,3 +19,10 @@ class FeedAdmin(admin.ModelAdmin):
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
     list_display = ('pk', 'data', 'owned_by', )
+
+
+admin.site.unregister(User)
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'username', 'first_name', 'last_name', 'email')
+    pass
