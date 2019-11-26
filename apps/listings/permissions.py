@@ -15,7 +15,15 @@ class TestPermissions(permissions.BasePermission):
         ).exists()
 
     def has_permission(self, request, view):
-        if not request.POST:
+        """
+            view.action = create, retrieve, update, partial_update, destroy, list
+        :param request:
+        :param view:
+        :return:
+        """
+        # create is the only action where there is no current object
+        if not view.action == 'create':
             return super(TestPermissions, self).has_permission(request, view)
 
-        return UserFeedPermissions.objects.filter(user=request.user, feed_id=request.POST['owned_by'])
+        # these will be handled by `has_object_permission` or `view.get_queryset`
+        return UserFeedPermissions.objects.filter(user=request.user, feed_id=request.data['owned_by'])
