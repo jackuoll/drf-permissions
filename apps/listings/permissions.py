@@ -9,6 +9,8 @@ class TestPermissions(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         user = request.user
+        if user.is_superuser:
+            return True
         return UserFeedPermissions.objects.filter(
             user=user,
             feed=obj.owned_by
@@ -21,6 +23,8 @@ class TestPermissions(permissions.BasePermission):
         :param view:
         :return:
         """
+        if request.user.is_superuser:
+            return True
         # create is the only action where there is no current object
         if not view.action == 'create':
             return super(TestPermissions, self).has_permission(request, view)
