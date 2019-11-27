@@ -16,7 +16,7 @@ class ListingViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         request = self.request
         qs = super(ListingViewSet, self).get_queryset()
-        if not request or not request.user:
+        if not request or request.user.is_superuser:
             return qs
 
         user = request.user
