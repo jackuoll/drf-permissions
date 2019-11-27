@@ -11,9 +11,12 @@ class TestPermissions(permissions.BasePermission):
         user = request.user
         if user.is_superuser:
             return True
+        feed_to_check = obj.owned_by
+        if 'update' in view.action:
+            feed_to_check = request.data.get('owned_by', -1)
         return UserFeedPermissions.objects.filter(
             user=user,
-            feed=obj.owned_by
+            feed=feed_to_check
         ).exists()
 
     def has_permission(self, request, view):

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Listing, UserFeedPermissions
+from .models import Listing, Feed
 
 
 class ListingSerializer(serializers.ModelSerializer):
